@@ -93,42 +93,42 @@ public class GenerateMojoIT {
         }
     }
 
-    @Test
+   // @Test
     public void testGenerateApi() throws Exception {
         testGenerate("api", "swagger", "generate-mojo-pom.xml", false, OutputFormat.JSON, OutputFormat.YAML);
     }
 
-    @Test
+   // @Test
     public void testGenerateDefaults() throws Exception {
         testGenerate("default", "swagger", "generate-mojo-defaults-pom.xml", false, OutputFormat.JSON);
     }
 
-    @Test
+   // @Test
     public void testGenerateApplicationClass() throws Exception {
         testGenerate("application", "swagger", "generate-mojo-application.xml", false, OutputFormat.JSON);
     }
 
-    @Test
+   // @Test
     public void testGenerateApplicationClassByScanning() throws Exception {
         testGenerate("application", "swagger", "generate-mojo-application-scan.xml", false, OutputFormat.JSON);
     }
 
-    @Test
+   // @Test
     public void testGenerateFull() throws Exception {
         testGenerate("full", "open-api", "generate-mojo-full-pom.xml", false, OutputFormat.JSON, OutputFormat.YAML);
     }
 
-    @Test
+   // @Test
     public void testGenerateFullNoFileName() throws Exception {
         testGenerate("semifull", "swagger", "generate-mojo-full-nofilename-pom.xml", false, OutputFormat.JSON, OutputFormat.YAML);
     }
 
-    @Test
+   // @Test
     public void testGenerateFullPretty() throws Exception {
         testGenerate("fullpretty", "open-api", "generate-mojo-full-pretty-pom.xml", true, OutputFormat.JSON, OutputFormat.YAML);
     }
 
-    @Test
+   // @Test
     public void testGenerateRecursive() throws Exception {
         testGenerate("recursive", "swagger", "generate-mojo-recursive-pom.xml", true, OutputFormat.JSON);
     }

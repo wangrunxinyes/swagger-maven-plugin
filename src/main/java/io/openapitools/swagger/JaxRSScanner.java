@@ -6,8 +6,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import javax.ws.rs.Path;
-import javax.ws.rs.core.Application;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.core.Application;
 
 import org.apache.maven.plugin.logging.Log;
 import org.reflections.Reflections;
@@ -49,7 +49,7 @@ class JaxRSScanner {
             return null;
         }
         if (applicationClasses.size() > 1) {
-            log.warn("More than one javax.ws.rs.core.Application classes found on the classpath, skipping");
+            log.warn("More than one jakarta.ws.rs.core.Application classes found on the classpath, skipping");
             return null;
         }
         return ClassUtils.createInstance(applicationClasses.iterator().next());
@@ -61,8 +61,7 @@ class JaxRSScanner {
                 .setScanners(new ResourcesScanner(), new TypeAnnotationsScanner(), new SubTypesScanner());
         Reflections reflections = new Reflections(config);
         Stream<Class<?>> apiClasses = reflections.getTypesAnnotatedWith(Path.class)
-                .stream()
-                .filter(this::filterClassByResourcePackages);
+                .stream();
         Stream<Class<?>> defClasses = reflections.getTypesAnnotatedWith(OpenAPIDefinition.class)
                 .stream()
                 .filter(this::filterClassByResourcePackages);

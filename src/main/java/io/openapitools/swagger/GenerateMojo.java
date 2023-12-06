@@ -1,6 +1,6 @@
 package io.openapitools.swagger;
 
-import javax.ws.rs.core.Application;
+import jakarta.ws.rs.core.Application;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -155,7 +155,7 @@ public class GenerateMojo extends AbstractMojo {
         Class<?> clazz = ClassUtils.loadClass(applicationClass, Thread.currentThread().getContextClassLoader());
 
         if (clazz == null || !Application.class.isAssignableFrom(clazz)) {
-            getLog().warn("Provided application class does not implement javax.ws.rs.core.Application, skipping");
+            getLog().warn("Provided application class does not implement jakarta.ws.rs.core.Application, skipping");
             return null;
         }
 
