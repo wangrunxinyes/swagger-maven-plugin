@@ -1,20 +1,21 @@
 package io.openapitools.swagger;
 
 import jakarta.ws.rs.core.Application;
-import java.io.File;
-import java.io.IOException;
+
+import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.*;
 
 import io.openapitools.swagger.config.SwaggerConfig;
 import io.swagger.v3.jaxrs2.Reader;
 import io.swagger.v3.oas.models.OpenAPI;
+import org.apache.commons.io.FileUtils;
 import org.apache.maven.artifact.DependencyResolutionRequiredException;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -26,6 +27,10 @@ import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.project.MavenProjectHelper;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.util.ResourceUtils;
 
 /**
  * Maven mojo to generate OpenAPI documentation document based on Swagger.
@@ -141,9 +146,75 @@ public class GenerateMojo extends AbstractMojo {
                     throw new RuntimeException("Unable write " + outputFilename + " document", e);
                 }
             });
+
+            try {
+                copyFolder();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
         } finally {
             // reset the TCCL back to the original class loader
             Thread.currentThread().setContextClassLoader(origClzLoader);
+        }
+    }
+
+    private void copyFolder() throws IOException {
+
+        Resource[] resources =
+                new PathMatchingResourcePatternResolver()
+                        .getResources(ResourceUtils.CLASSPATH_URL_PREFIX + "redoc-swagger-static/*.static");
+
+        for (Resource resource : resources) {
+
+            StringBuffer script = new StringBuffer();
+            try (InputStreamReader isr = new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8);
+                 BufferedReader bufferReader = new BufferedReader(isr)) {
+                String tempString;
+                while ((tempString = bufferReader.readLine()) != null) {
+                    script.append(tempString).append("\n");
+                }
+                writeResource(
+                        script.toString(), resource
+                );
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    protected String getFolder(String fileName) {
+        if (fileName.endsWith(".js")) {
+            return "js";
+        } else if (fileName.endsWith(".css")) {
+            return "css";
+        }
+
+        return "";
+    }
+
+    private void writeResource(String content, Resource resource) {
+        String fileName = resource.getFilename().replace(".static", "");
+        String directoryPath = Paths.get(
+                outputDirectory.getAbsolutePath().toString(),
+                getFolder(fileName)
+        ).toString();
+
+        File directory = new File(directoryPath);
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
+
+        String fullFile = Paths.get(
+                directoryPath,
+                fileName
+        ).toString();
+
+        try (FileWriter writer = new FileWriter(fullFile)) {
+            writer.write(content);
+            System.out.println("copy resource: " + resource.getURI().toString() + " to file: " + fullFile);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -160,7 +231,7 @@ public class GenerateMojo extends AbstractMojo {
         }
 
         @SuppressWarnings("unchecked")
-        Class<? extends Application> appClazz = (Class<? extends Application>)clazz;
+        Class<? extends Application> appClazz = (Class<? extends Application>) clazz;
         return ClassUtils.createInstance(appClazz);
     }
 
