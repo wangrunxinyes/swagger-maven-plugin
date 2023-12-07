@@ -1,3 +1,6 @@
+forked from openapi-tools/swagger-maven-plugin
+upgrade to java 21 & Jakarta support
+
 # Swagger Maven Plugin
 
 This plugin is intended to use the [Swagger Core library](https://github.com/swagger-api/swagger-core) to generate
