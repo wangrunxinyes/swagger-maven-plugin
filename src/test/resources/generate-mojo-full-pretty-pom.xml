@@ -52,7 +52,7 @@
                     <outputFilename>open-api</outputFilename>
                     <prettyPrint>true</prettyPrint>
 
-                    <project implementation="io.openapitools.swagger.MavenProjectStub"/>
+                    <project implementation="com.wangrunxin.plugin.swagger.MavenProjectStub"/>
                 </configuration>
             </plugin>
         </plugins>

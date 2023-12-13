@@ -25,7 +25,7 @@
                     <outputDirectory>target/api</outputDirectory>
                     <outputFilename>swagger</outputFilename>
 
-                    <project implementation="io.openapitools.swagger.MavenProjectStub"/>
+                    <project implementation="com.wangrunxin.plugin.swagger.MavenProjectStub"/>
                 </configuration>
             </plugin>
         </plugins>

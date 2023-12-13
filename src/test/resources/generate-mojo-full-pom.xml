@@ -167,7 +167,7 @@
                     <outputDirectory>target/full</outputDirectory>
                     <outputFilename>open-api</outputFilename>
 
-                    <project implementation="io.openapitools.swagger.MavenProjectStub"/>
+                    <project implementation="com.wangrunxin.plugin.swagger.MavenProjectStub"/>
                 </configuration>
             </plugin>
         </plugins>

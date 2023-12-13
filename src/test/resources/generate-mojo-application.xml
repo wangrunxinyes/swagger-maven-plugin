@@ -20,9 +20,9 @@
                         <resourcePackage>io.openapitools.swagger.example.alternate</resourcePackage>
                     </resourcePackages>
                     <outputDirectory>target/application</outputDirectory>
-                    <applicationClass>io.openapitools.swagger.example.app.RestApplication</applicationClass>
+                    <applicationClass>com.wangrunxin.plugin.swagger.example.app.RestApplication</applicationClass>
 
-                    <project implementation="io.openapitools.swagger.MavenProjectStub"/>
+                    <project implementation="com.wangrunxin.plugin.swagger.MavenProjectStub"/>
                 </configuration>
             </plugin>
         </plugins>

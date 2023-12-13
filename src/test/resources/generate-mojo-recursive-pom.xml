@@ -21,7 +21,7 @@
                     <outputDirectory>target/recursive</outputDirectory>
                     <useResourcePackagesChildren>true</useResourcePackagesChildren>
 
-                    <project implementation="io.openapitools.swagger.MavenProjectStub"/>
+                    <project implementation="com.wangrunxin.plugin.swagger.MavenProjectStub"/>
                 </configuration>
             </plugin>
         </plugins>
