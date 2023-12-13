@@ -29,11 +29,22 @@ To have Swagger generate the OpenAPI specifications as part of the build add in 
       <groupId>io.openapitools.swagger</groupId>
       <artifactId>swagger-maven-plugin</artifactId>
       <configuration>
-        <resourcePackages>
-          <resourcePackage>io.openapitools.swagger.example</resourcePackage>
-          <resourcePackage>io.openapitools.swagger.example.alternate</resourcePackage>
-        </resourcePackages>
-        <outputDirectory>${basedir}/target/</outputDirectory>
+        <packages>
+           <package>
+             <resourcePackages>
+                 <resourcePackage>io.openapitools.swagger.example</resourcePackage>
+                 <resourcePackage>io.openapitools.swagger.example.alternate</resourcePackage>
+             </resourcePackages>
+             <outputDirectory>${basedir}/target/</outputDirectory>
+           </package>
+           <package>
+             <resourcePackages>
+               <resourcePackage>io.openapitools.swagger.example</resourcePackage>
+               <resourcePackage>io.openapitools.swagger.example.alternate</resourcePackage>
+             </resourcePackages>
+             <outputDirectory>${basedir}/target/</outputDirectory>
+           </package>
+        </packages>
         <outputFilename>swagger</outputFilename>
         <outputFormats>JSON,YAML</outputFormats>
         <prettyPrint>true</prettyPrint>
